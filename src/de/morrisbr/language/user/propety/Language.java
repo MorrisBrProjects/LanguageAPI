@@ -34,13 +34,6 @@ public class Language {
 	}
 
 	/**
-	 * Delete all messages in Memory
-	 */
-	public void unLoad() {
-		messages.clear();
-	}
-
-	/**
 	 * Load The Language.
 	 * His put all Messages from this Language Config in Memory.
 	 * His create auto a new language YML file.
@@ -71,7 +64,14 @@ public class Language {
 		}
 
 	}
-	
+
+	/**
+	 * Delete all messages in Memory
+	 */
+	public void unLoad() {
+		messages.clear();
+	}
+
 	public List<Message> getMessages() {
 
 		List<Message> messages = new ArrayList<Message>();
