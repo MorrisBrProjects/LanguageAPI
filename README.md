@@ -3,7 +3,7 @@
 Wie man sie Verwendet:
 
 
-Main:
+Main onEnable Code:
 <pre><code>
 
 	LanguagePlugin languageApi = getPlugin(LanguagePlugin.class);
