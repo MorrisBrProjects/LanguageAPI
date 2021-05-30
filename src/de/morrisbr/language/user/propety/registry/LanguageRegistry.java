@@ -11,9 +11,10 @@ import java.util.Set;
 
 public class LanguageRegistry {
 
-	private final Registry registry;
-	private final HashMap<String, Language> languages = new HashMap<String, Language>();
 	private Language basicLanguage;
+	private final Registry registry;
+
+	private final HashMap<String, Language> languages = new HashMap<String, Language>();
 
 
 	public LanguageRegistry(Registry registry) {
@@ -33,6 +34,7 @@ public class LanguageRegistry {
 	}
 
 	/**
+	 *
 	 * Get a list of all registered languages
 	 *
 	 * @return List<Language>
@@ -43,6 +45,7 @@ public class LanguageRegistry {
 
 
 	/**
+	 *
 	 * Get a SET of all the names of the registered languages
 	 *
 	 * @return Set<String>
@@ -53,18 +56,20 @@ public class LanguageRegistry {
 
 
 	/**
+	 *
 	 * Get Language by Language Name
 	 *
 	 * @param languageKey
 	 * @return Language
 	 */
-
+	
 	public Language getLanguage(String languageKey) {
 		return languages.get(languageKey);
 	}
 
 
 	/**
+	 *
 	 * Get a Language by Config path.
 	 *
 	 * @param languagePath
@@ -81,6 +86,7 @@ public class LanguageRegistry {
 
 
 	/**
+	 *
 	 * Register a Language.
 	 * After the Methode can you use
 	 * this Language.
@@ -88,30 +94,31 @@ public class LanguageRegistry {
 	 * @param spreek
 	 * @param plugin
 	 */
-
+	
 	public void register(String spreek, JavaPlugin plugin) {
-
+		
 		//plugin.getDataFolder().mkdirs();
-
+		
 		Path path = Paths.get(plugin.getDataFolder().toString()).resolve("translations");
 		path.toFile().mkdirs();
-
+		
 		Language language = new Language(spreek, path.resolve(spreek + ".yml").toString());
 		language.load(plugin);
-
+		
 		languages.put(spreek, language);
 		System.out.println(">>> " + language.getConfigPath());
 	}
 
 
 	/**
+	 *
 	 * Unregister a Language.
 	 * You can`t after this Methode
 	 * this Language call!
 	 *
 	 * @param languageKey
 	 */
-
+	
 	public void unRegister(String languageKey) {
 		getLanguage(languageKey).unLoad();
 		getLanguagesMap().remove(languageKey);
@@ -119,9 +126,10 @@ public class LanguageRegistry {
 
 
 	/**
+	 *
 	 * Set the Default Language.
-	 * <p>
-	 * The Default Language is need
+	 *
+	 * The Default Language is need 
 	 * to set a not registed Player
 	 * a Language.
 	 *
@@ -134,6 +142,7 @@ public class LanguageRegistry {
 
 
 	/**
+	 *
 	 * Get the basic Language.
 	 *
 	 * @return Language
@@ -144,6 +153,7 @@ public class LanguageRegistry {
 
 
 	/**
+	 *
 	 * Get the Registry.
 	 *
 	 * @return Registry

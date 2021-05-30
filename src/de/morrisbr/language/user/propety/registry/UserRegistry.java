@@ -26,19 +26,20 @@ public class UserRegistry {
 	 * @param user
 	 */
 	public void addUser(User user) {
-
+		
 //		User user = user;
 //		user.setUuid(uuid);
 //		user.setProfile(profile);
-
+		
 		LiteSQL databank = getRegistry().getPlugin().getDataBase();
-
+		
 		users.put(user.getUuid(), user);
 		databank.execute("INSERT OR IGNORE INTO Users " + "VALUES ('" + user.getUuid() + "', '" + user.getProfile().getLanguage().getName() + "')");
 	}
 
 
 	/**
+	 *
 	 * Get a User from uuid.
 	 * Not stable, can return NULL
 	 *
@@ -51,11 +52,12 @@ public class UserRegistry {
 
 
 	/**
+	 *
 	 * Check is User in Memory registed.
 	 * User is Registed, when his Joined.
-	 * <p>
+	 *
 	 * Returnt: True - when is in Memory.
-	 * <p>
+	 *
 	 * Returnt: False - when is not in Memory.
 	 *
 	 * @param uuid
@@ -67,11 +69,12 @@ public class UserRegistry {
 
 
 	/**
+	 *
 	 * Check is User in DataBase registed.
 	 * User is Registed, when his Joined.
-	 * <p>
+	 *
 	 * Returnt: True - when is in DataBase.
-	 * <p>
+	 *
 	 * Returnt: False - when is not in DataBase.
 	 *
 	 * @param uuid
@@ -90,9 +93,9 @@ public class UserRegistry {
 			exception.printStackTrace();
 		}
 		return false;
-	}
+    }
 
-
+	
 //	public boolean isUserExistInDataBase(String uuid) {
 //	
 //	LiteSQL database = getRegistry().getPlugin().getDataBase();
@@ -116,6 +119,7 @@ public class UserRegistry {
 //}
 
 	/**
+	 *
 	 * Get the Registry.
 	 *
 	 * @return Registry

@@ -34,6 +34,13 @@ public class Language {
 	}
 
 	/**
+	 * Delete all messages in Memory
+	 */
+	public void unLoad() {
+		messages.clear();
+	}
+
+	/**
 	 * Load The Language.
 	 * His put all Messages from this Language Config in Memory.
 	 * His create auto a new language YML file.
@@ -64,14 +71,7 @@ public class Language {
 		}
 
 	}
-
-	/**
-	 * Delete all messages in Memory
-	 */
-	public void unLoad() {
-		messages.clear();
-	}
-
+	
 	public List<Message> getMessages() {
 
 		List<Message> messages = new ArrayList<Message>();
@@ -82,11 +82,12 @@ public class Language {
 
 		return messages;
 	}
-
+	
+	
 	public String getName() {
 		return name;
 	}
-
+	
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -99,17 +100,17 @@ public class Language {
 	public HashMap<String, Message> getMessagesMap() {
 		return messages;
 	}
-
+	
 	public Message getMessage(String keyName) {
 		return messages.get(keyName);
 	}
-
+	
 	public String getMessageContent(String keyName) {
 		return getMessage(keyName).getContent();
 	}
-
+	
 	public void setMessage(String keyName, Message message) {
 		messages.put(keyName, message);
 	}
-
+	
 }
