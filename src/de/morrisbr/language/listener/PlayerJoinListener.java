@@ -26,17 +26,15 @@ public class PlayerJoinListener implements Listener {
 
         User user;
         UserProfile profile;
+        Language language;
 
         UserRegistry userRegistry = plugin.getRegistry().getUserRegistry();
         LanguageRegistry languageRegistry = plugin.getRegistry().getLanguageRegistry();
 
-
         user = new User();
         user.setUuid(player.getUniqueId().toString());
-
         profile = new UserProfile(plugin, user);
         profile.setLanguage(languageRegistry.getBasicLanguage());
-
         user.setProfile(profile);
 
         userRegistry.addUser(user);
@@ -44,8 +42,7 @@ public class PlayerJoinListener implements Listener {
 
         if (userRegistry.isUserExistInMemory(player.getUniqueId().toString())) {
             user = userRegistry.getUser(player.getUniqueId().toString());
-
-            Language language = languageRegistry.getLanguageFromDataBase(user.getUuid());
+            language = languageRegistry.getLanguageFromDataBase(user.getUuid());
 
             user.getProfile().setLanguage(language);
         }
