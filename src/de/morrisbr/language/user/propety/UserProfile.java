@@ -4,6 +4,9 @@ import de.morrisbr.language.LanguagePlugin;
 import de.morrisbr.language.database.LiteSQL;
 import de.morrisbr.language.user.User;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class UserProfile {
 
     private final LanguagePlugin plugin;
@@ -47,7 +50,24 @@ public class UserProfile {
         Language language = plugin.getRegistry().getLanguageRegistry().getLanguage(languageKey);
         setLanguage(language);
 
-        database.execute("INSERT INTO Users " + "VALUES ('" + user.getUuid() + "', '" + language.getName() + "')");
+        if (!isAlreadyLanguageSet()) {
+            database.execute("INSERT INTO Users " + "VALUES ('" + user.getUuid() + "', '" + language.getName() + "')");
+        }
+    }
+
+    private boolean isAlreadyLanguageSet() {
+        LiteSQL database = plugin.getDataBase();
+
+        try {
+            ResultSet resultSet = database.executeQuery("SELECT spreek FROM Users WHERE spreek='" + user.getProfile().getLanguage().getName() + "'");
+            if (resultSet.next()) {
+                resultSet.close();
+                return true;
+            }
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return false;
     }
 
 
@@ -63,7 +83,9 @@ public class UserProfile {
         LiteSQL database = plugin.getDataBase();
         setLanguage(language);
 
-        database.execute("INSERT INTO Users " + "VALUES ('" + user.getUuid() + "', '" + language.getName() + "')");
+        if (!isAlreadyLanguageSet()) {
+            database.execute("INSERT INTO Users " + "VALUES ('" + user.getUuid() + "', '" + language.getName() + "')");
+        }
     }
 
     public User getUser() {
