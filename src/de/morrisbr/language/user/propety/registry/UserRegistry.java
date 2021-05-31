@@ -1,11 +1,16 @@
 package de.morrisbr.language.user.propety.registry;
 
+import de.morrisbr.language.LanguagePlugin;
 import de.morrisbr.language.database.LiteSQL;
 import de.morrisbr.language.user.User;
+import org.bukkit.ChatColor;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.UUID;
 
 public class UserRegistry {
 
@@ -26,15 +31,23 @@ public class UserRegistry {
 	 * @param user
 	 */
 	public void addUser(User user) {
-		
+
 //		User user = user;
 //		user.setUuid(uuid);
 //		user.setProfile(profile);
-		
+
 		LiteSQL databank = getRegistry().getPlugin().getDataBase();
-		
+
+		LanguagePlugin plugin = registry.getPlugin();
+		ConsoleCommandSender consoleSender = plugin.getServer().getConsoleSender();
+		Player player = plugin.getServer().getPlayer(UUID.fromString(user.getUuid()));
+
 		users.put(user.getUuid(), user);
-		databank.execute("INSERT OR IGNORE INTO Users " + "VALUES ('" + user.getUuid() + "', '" + user.getProfile().getLanguage().getName() + "')");
+
+		if (!isUserExistInDataBase(user.getUuid())) {
+			databank.execute("INSERT OR IGNORE INTO Users " + "VALUES ('" + user.getUuid() + "', '" + user.getProfile().getLanguage().getName() + "')");
+		} else
+			consoleSender.sendMessage(ChatColor.YELLOW + "LanguageAPI: The User(" + player.getName() + ", " + user.getUuid() + ") is already registered!");
 	}
 
 
