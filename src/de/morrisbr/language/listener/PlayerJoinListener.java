@@ -39,7 +39,6 @@ public class PlayerJoinListener implements Listener {
 
         userRegistry.addUser(user);
 
-
         if (userRegistry.isUserExistInMemory(player.getUniqueId().toString())) {
             user = userRegistry.getUser(player.getUniqueId().toString());
             language = languageRegistry.getLanguageFromDataBase(user.getUuid());
