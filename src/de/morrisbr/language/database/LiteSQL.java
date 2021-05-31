@@ -10,9 +10,9 @@ import java.sql.*;
 
 public class LiteSQL {
 
-    private final LanguagePlugin plugin;
     private Connection connection;
     private Statement statemant;
+    private final LanguagePlugin plugin;
 
     public LiteSQL(LanguagePlugin plugin) {
         this.plugin = plugin;
@@ -42,9 +42,9 @@ public class LiteSQL {
                     "	spreek	VARCHAR(10)" +
                     ");");
 
-//			execute("CREATE TABLE IF NOT EXISTS Users (" + 
-//					"	player_uuid	VARCHAR(50) UNIQUE," + 
-//					"	spreek	VARCHAR(10)" + 
+//			execute("CREATE TABLE IF NOT EXISTS Users (" +
+//					"	player_uuid	VARCHAR(50) UNIQUE," +
+//					"	spreek	VARCHAR(10)" +
 //					");");
 
 
@@ -67,7 +67,6 @@ public class LiteSQL {
     public void execute(String sql) {
         try {
             statemant.execute(sql);
-            statemant.close(); //da
         } catch (SQLException e) {
             e.printStackTrace();
         }

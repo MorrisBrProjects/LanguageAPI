@@ -51,6 +51,7 @@ public class UserProfile {
         setLanguage(language);
 
         if (!isAlreadyLanguageSet()) {
+            System.out.println("insert");
             database.execute("INSERT INTO Users " + "VALUES ('" + user.getUuid() + "', '" + language.getName() + "')");
         }
     }

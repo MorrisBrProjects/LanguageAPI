@@ -1,10 +1,14 @@
 package de.morrisbr.language.user.propety.registry;
 
+import de.morrisbr.language.LanguagePlugin;
+import de.morrisbr.language.database.LiteSQL;
 import de.morrisbr.language.user.propety.Language;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +19,7 @@ public class LanguageRegistry {
 	private final Registry registry;
 
 	private final HashMap<String, Language> languages = new HashMap<String, Language>();
+
 
 
 	public LanguageRegistry(Registry registry) {
@@ -62,14 +67,22 @@ public class LanguageRegistry {
 	 * @param languageKey
 	 * @return Language
 	 */
-	
+
 	public Language getLanguage(String languageKey) {
 		return languages.get(languageKey);
 	}
 
 
+	public boolean isLanguageExist(String languageKey) {
+		return getLanguage(languageKey) != null;
+	}
+
+	public boolean isLanguageExist(Language language) {
+		return getLanguage(language.getName()) != null;
+	}
+
+
 	/**
-	 *
 	 * Get a Language by Config path.
 	 *
 	 * @param languagePath
@@ -94,20 +107,21 @@ public class LanguageRegistry {
 	 * @param spreek
 	 * @param plugin
 	 */
-	
+
 	public void register(String spreek, JavaPlugin plugin) {
-		
+
 		//plugin.getDataFolder().mkdirs();
-		
+
 		Path path = Paths.get(plugin.getDataFolder().toString()).resolve("translations");
 		path.toFile().mkdirs();
-		
+
 		Language language = new Language(spreek, path.resolve(spreek + ".yml").toString());
 		language.load(plugin);
-		
+
 		languages.put(spreek, language);
 		System.out.println(">>> " + language.getConfigPath());
 	}
+
 
 
 	/**
@@ -118,10 +132,30 @@ public class LanguageRegistry {
 	 *
 	 * @param languageKey
 	 */
-	
+
 	public void unRegister(String languageKey) {
 		getLanguage(languageKey).unLoad();
 		getLanguagesMap().remove(languageKey);
+	}
+
+
+	public Language getLanguageFromDataBase(String uuid) {
+
+		LanguagePlugin languagePlugin = getRegistry().getPlugin();
+		LiteSQL database = languagePlugin.getDataBase();
+
+		try {
+			ResultSet resultSet = database.executeQuery("SELECT * FROM Users WHERE player_uuid = '" + uuid + "'");
+			resultSet.next();
+
+			Language language = getLanguage(resultSet.getString("spreek"));
+
+			resultSet.close();
+			return language;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 
@@ -129,7 +163,7 @@ public class LanguageRegistry {
 	 *
 	 * Set the Default Language.
 	 *
-	 * The Default Language is need 
+	 * The Default Language is need
 	 * to set a not registed Player
 	 * a Language.
 	 *

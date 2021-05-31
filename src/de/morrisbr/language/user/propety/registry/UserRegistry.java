@@ -32,10 +32,6 @@ public class UserRegistry {
 	 */
 	public void addUser(User user) {
 
-//		User user = user;
-//		user.setUuid(uuid);
-//		user.setProfile(profile);
-
 		LiteSQL databank = getRegistry().getPlugin().getDataBase();
 
 		LanguagePlugin plugin = registry.getPlugin();
@@ -106,25 +102,25 @@ public class UserRegistry {
 			exception.printStackTrace();
 		}
 		return false;
-    }
+	}
 
-	
+
 //	public boolean isUserExistInDataBase(String uuid) {
-//	
+//
 //	LiteSQL database = getRegistry().getPlugin().getDataBase();
-//	
+//
 //	try {
-//		
+//
 //		boolean isExist;
-//		
+//
 //		ResultSet resultSet = database.executeQuery("SELECT count(spreek),spreek FROM Users WHERE player_uuid = " + uuid);
 //		resultSet.next();
-//		
+//
 //		isExist = resultSet.getInt("count(spreek)") == 1;
 //		resultSet.close();
-//		
+//
 //		return isExist;
-//		
+//
 //	} catch (SQLException e) {
 //		e.printStackTrace();
 //		return false;
